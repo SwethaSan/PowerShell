@@ -1,0 +1,33 @@
+DocAve Online Content Manager is a powerful tool for managing content in SharePoint, including the task of moving files between different SharePoint sites while retaining their original file metadata. Here's a general guide on how to use DocAve Online Content Manager for this purpose:
+
+Access DocAve Manager: Log in to your DocAve Manager. Ensure you have the necessary permissions to perform content management tasks.
+
+Navigate to Content Manager: In the DocAve Control Panel, you should find the Content Manager module. This module is specifically designed for managing and moving content within SharePoint.
+
+Select Source and Destination:
+
+Source: Select the SharePoint site and the specific library or folder where the files you want to move are currently stored.
+Destination: Choose the target SharePoint site and the specific library or folder where you want to move the files.
+Configure the Job:
+
+You'll have options to select specific files or entire folders.
+Set the type of operation you want to perform – in this case, 'Copy' or 'Move'. 'Copy' will keep the original files in place, whereas 'Move' will transfer them.
+Retain File Metadata:
+
+Ensure that the option to retain file metadata is selected. This is crucial as it keeps the original properties and audit trails of the files intact.
+Metadata includes created and modified dates, document IDs, version history, and custom properties.
+Run the Job:
+
+After configuring the settings, run the job.
+DocAve should provide a way to monitor the progress of the job and any issues that might occur during the process.
+Verify the Transfer:
+
+Once the job is complete, verify that the files have been successfully moved to the destination site.
+Check that the metadata of the files is intact and matches the source.
+Post-Migration Clean-Up: If you chose the 'Move' operation, ensure that the source location is cleaned up if necessary. For 'Copy', verify that the files are correctly duplicated.
+
+Address Any Issues: If there were any errors or issues during the transfer, use the DocAve Manager's logs and reports to troubleshoot and resolve these problems.
+
+Documentation and Compliance: Depending on your organization's policies, document the process for compliance and auditing purposes.
+
+Please note that the exact steps and interface might vary depending on the version of DocAve Online Content Manager you are using and the specific configuration of your SharePoint environment. Always refer to the official DocAve documentation or support resources for the most accurate and detailed instructions.

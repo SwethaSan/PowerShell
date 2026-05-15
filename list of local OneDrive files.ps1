@@ -1,22 +1,40 @@
 #How to make list of local OneDrive files that haven't finished sync'ing
 
 $ErrorActionPreference = 'Inquire'
-
 function Get-OneDriveRoots {
-  $roots = New-Object System.Collections.Generic.HashSet[string]
-  foreach ($name in 'OneDrive', 'OneDriveCommercial', 'OneDriveConsumer') {
-    $p = [Environment]::GetEnvironmentVariable($name, 'User')
-    if ($p -and (Test-Path $p)) { $roots.Add((Get-Item $p).FullName) | Out-Null }
-  }
-  $regPath = 'HKCU:\Software\Microsoft\OneDrive\Accounts'
-  if (Test-Path $regPath) {
-    Get-ChildItem $regPath | ForEach-Object {
-      $uf = (Get-ItemProperty $_.PsPath -Name 'UserFolder' -ErrorAction Inquire).UserFolder
-      if ($uf -and (Test-Path $uf)) { $roots.Add((Get-Item $uf).FullName) | Out-Null }
+    # Use a HashSet to ensure unique paths
+    $roots = New-Object System.Collections.Generic.HashSet[string]
+    
+    # 1. Check common environment variables (fastest method)
+    foreach ($name in 'OneDrive', 'OneDriveCommercial', 'OneDriveConsumer') {
+        $p = [Environment]::GetEnvironmentVariable($name, 'User')
+        if ($p -and (Test-Path $p)) {
+            $roots.Add((Get-Item $p).FullName) | Out-Null
+        }
     }
-  }
-  return $roots.ToArray()
+
+    # 2. Dynamically scan all account subkeys in the registry
+    $regPath = 'HKCU:\Software\Microsoft\OneDrive\Accounts'
+    if (Test-Path $regPath) {
+        Get-ChildItem $regPath | ForEach-Object {
+            # Get the 'UserFolder' property without failing if it's missing
+            $val = Get-ItemProperty -Path $_.PsPath -Name 'UserFolder' -ErrorAction SilentlyContinue
+            if ($val -and $val.UserFolder -and (Test-Path $val.UserFolder)) {
+                $roots.Add((Get-Item $val.UserFolder).FullName) | Out-Null
+            }
+        }
+    }
+
+    # FIX: Cast to array or return the collection explicitly
+    #return ,$roots.ToArray() # Added , to avoid unpacking, or just use: [string[]]$roots
+    # Corrected return:
+    return [string[]]$roots
 }
+
+# Example usage:
+$myOneDrivePaths = Get-OneDriveRoots
+$myOneDrivePaths
+
 
 $shell = New-Object -ComObject Shell.Application
 $StatusHeader = 'Status'   # If your Windows is not in English, change this to the localized column name

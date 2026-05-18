@@ -6,7 +6,7 @@
 $tenantAdminUrl = "https://usfintech-admin.sharepoint.com"
 $outputPath     = "C:\data\SwS\PP\USFinTech_SharePointAlerts_$(Get-Date -Format 'yyyyMMdd').csv"
 $logPath        = "C:\data\SwS\PP\USFinTech_SharePointAlerts_Errors_$(Get-Date -Format 'yyyyMMdd').log"
-$clientId       = "83b4e9ee-5d0a-4310-a55c-a5a83e6366e3"
+$clientId       = "guid"
 
 # Connect to tenant admin
 Connect-PnPOnline -Url $tenantAdminUrl -ClientId $clientId -Interactive
